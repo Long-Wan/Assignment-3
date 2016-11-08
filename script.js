@@ -4,6 +4,7 @@ function drawAll() {
     drawWindows();
     drawDoor();
     drawChimney();
+    smoke();
 }
 function drawHouse() {
     
@@ -175,11 +176,51 @@ function drawSky() {
     gradient.addColorStop(0, "#000000");
     gradient.addColorStop(1, "#000033");
     ctx.fillStyle = gradient;
+    ctx.beginPath();
     ctx.fillRect(0, 0, 500, 400);
+    ctx.closePath();
 
-    var gradient2 = ctx.createRadialGradient(75, 50, 2, 74, 49, 3);
-    gradient.addColorStop(0, "#ffffff");
-    gradient.addColorStop(1, "#ffffff");
+    var gradient2 = ctx.createRadialGradient(75,50,5,70,40,60);
+    gradient2.addColorStop(0, "#ffffff");
+    gradient2.addColorStop(1, "#000000");
+    ctx.globalAlpha = 0.7;
     ctx.fillStyle = gradient2;
-    ctx.fillRect(50, 50, 10, 10);
+    ctx.beginPath();
+    ctx.arc(50, 50, 30, 0, 2*Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+}
+
+function smoke() {
+    var interval = setInterval(animateSmoke, 50);
+} 
+
+var y = 160;
+var radius = 5;
+var opacity = 0.7;
+function animateSmoke() {
+    var canvas = document.getElementById("myHouse2");
+    var ctx = canvas.getContext("2d");
+    
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.fillStyle = "#888888";
+    ctx.globalAlpha = opacity;
+    ctx.beginPath();
+    ctx.arc(290, y, radius, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    y -= 5;
+    radius += 1;
+    opacity -= 0.02;
+    if (y < 0) {
+        y = 160;
+        radius = 5;
+        opacity = 0.7;
+    }
+    
+
+    
 }
