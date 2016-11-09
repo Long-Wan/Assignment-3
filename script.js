@@ -8,9 +8,15 @@ var x = 280;
 var x2 = 280;
 var counter = 0;
 var smokeSpeed = 5;
+var opacityRate = 0.015;
+var direction = 2;
+var direction2 = -2;
 
-function speed(val) {
-    var smokeSpeed = document.getElementById("myRange").innerHTML = val;
+function speed() {
+    smokeSpeed = document.getElementById("myRange").value;
+    if (smokeSpeed > 7) {
+        opacityRate = 0.03;
+    }
 }
 
 function drawAll() {
@@ -20,6 +26,7 @@ function drawAll() {
     drawDoor();
     drawChimney();
     drawSmoke();
+    speed();
 }
 function drawHouse() {
     
@@ -256,24 +263,10 @@ function drawSky() {
 function drawSmoke() {
     var interval = setInterval(animateSmoke, 50);
     var timeout = setTimeout(smokes, 500); 
-    var interval2 = setInterval(randomSmoke, (y + 50) / 5 * 50);
-    var timeout2 = setTimeout(RandomSmokes, 500); 
 }
 
 function smokes() {
     var interval = setInterval(animateSmoke2, 50);
-}
-
-function RandomSmokes() {
-    var interval = setInterval(randomSmoke2, (y2 + 50) / 5 * 50);
-}
-
-function randomSmoke() {
-    x = Math.random() * (320 - 280) + 280;
-}
-
-function randomSmoke2() {
-    x2 = Math.random() * (320 - 280) + 280;
 }
 
 function animateSmoke() {
@@ -289,14 +282,22 @@ function animateSmoke() {
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;
-    y -= speed();
+    y -= smokeSpeed;
+    x += direction;
     radius += 1;
-    opacity -= 0.015;
+    opacity -= opacityRate;
     if (y <= -50) {
         y = 160;
         radius = 5;
         opacity = 0.7;
+        opacityRate = 0.015;
     }  
+    if (x > 320) {
+        direction = -2;
+    }
+    if (x < 280) {
+        direction = 2;
+    }
 }
 
 function animateSmoke2() {
@@ -312,12 +313,20 @@ function animateSmoke2() {
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;
-    y2 -= speed();
+    y2 -= smokeSpeed;
+    x2 += direction2;
     radius2 += 1;
-    opacity2 -= 0.015;
+    opacity2 -= opacityRate;
     if (y2 <= -50) {
         y2 = 160;
         radius2 = 5;
         opacity2 = 0.7;
+        opacityRate = 0.015;
     }  
+    if (x2 > 320) {
+        direction2 = -2;
+    }
+    if (x2 < 280) {
+        direction2 = 2;
+    }
 }
