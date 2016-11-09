@@ -1,16 +1,21 @@
 var y = 160;
 var y2 = 160;
+var y3 = 160;
 var radius = 5;
 var radius2 = 5;
+var radius3 = 5;
 var opacity = 0.7;
 var opacity2 = 0.7;
+var opacity3 = 0.7;
 var x = 280;
 var x2 = 280;
+var x3 = 280;
 var counter = 0;
 var smokeSpeed = 5;
 var opacityRate = 0.015;
 var direction = 2;
 var direction2 = -2;
+var direction3 = 2;
 
 function speed() {
     smokeSpeed = document.getElementById("myRange").value;
@@ -263,10 +268,15 @@ function drawSky() {
 function drawSmoke() {
     var interval = setInterval(animateSmoke, 50);
     var timeout = setTimeout(smokes, 500); 
+    var timeout2 = setTimeout(smokes2, 1000);
 }
 
 function smokes() {
     var interval = setInterval(animateSmoke2, 50);
+}
+
+function smokes2() {
+    var interval = setInterval(animateSmoke3, 50);
 }
 
 function animateSmoke() {
@@ -328,5 +338,36 @@ function animateSmoke2() {
     }
     if (x2 < 280) {
         direction2 = 2;
+    }
+}
+
+function animateSmoke3() {
+    var canvas = document.getElementById("myHouse4");
+    var ctx = canvas.getContext("2d");
+    
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.fillStyle = "#888888";
+    ctx.globalAlpha = opacity3;
+    ctx.beginPath();
+    ctx.arc(x3, y3, radius3, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    y3 -= smokeSpeed;
+    x3 += direction3;
+    radius3 += 1;
+    opacity3 -= opacityRate;
+    if (y3 <= -50) {
+        y3 = 160;
+        radius3 = 5;
+        opacity3 = 0.7;
+        opacityRate = 0.015;
+    }  
+    if (x3 > 320) {
+        direction3 = -2;
+    }
+    if (x3 < 280) {
+        direction3 = 2;
     }
 }
