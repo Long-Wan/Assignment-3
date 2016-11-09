@@ -1,10 +1,25 @@
+var y = 160;
+var y2 = 160;
+var radius = 5;
+var radius2 = 5;
+var opacity = 0.7;
+var opacity2 = 0.7;
+var x = 280;
+var x2 = 280;
+var counter = 0;
+var smokeSpeed = 5;
+
+function speed(val) {
+    var smokeSpeed = document.getElementById("myRange").innerHTML = val;
+}
+
 function drawAll() {
     drawSky();            
     drawHouse();
     drawWindows();
     drawDoor();
     drawChimney();
-    smoke();
+    drawSmoke();
 }
 function drawHouse() {
     
@@ -190,15 +205,77 @@ function drawSky() {
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;
+
+    ctx.fillStyle = "#ffffff";
+    ctx.beginPath();
+    ctx.arc(400, 60, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(120, 30, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(80, 130, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(200, 140, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(250, 100, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(180, 70, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(230, 20, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(300, 50, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(320, 120, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(450, 20, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.beginPath();
+    ctx.arc(470, 120, 1, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
 }
 
-function smoke() {
+function drawSmoke() {
     var interval = setInterval(animateSmoke, 50);
-} 
+    var timeout = setTimeout(smokes, 500); 
+    var interval2 = setInterval(randomSmoke, (y + 50) / 5 * 50);
+    var timeout2 = setTimeout(RandomSmokes, 500); 
+}
 
-var y = 160;
-var radius = 5;
-var opacity = 0.7;
+function smokes() {
+    var interval = setInterval(animateSmoke2, 50);
+}
+
+function RandomSmokes() {
+    var interval = setInterval(randomSmoke2, (y2 + 50) / 5 * 50);
+}
+
+function randomSmoke() {
+    x = Math.random() * (320 - 280) + 280;
+}
+
+function randomSmoke2() {
+    x2 = Math.random() * (320 - 280) + 280;
+}
+
 function animateSmoke() {
     var canvas = document.getElementById("myHouse2");
     var ctx = canvas.getContext("2d");
@@ -208,19 +285,39 @@ function animateSmoke() {
     ctx.fillStyle = "#888888";
     ctx.globalAlpha = opacity;
     ctx.beginPath();
-    ctx.arc(290, y, radius, 0, 2 * Math.PI);
+    ctx.arc(x, y, radius, 0, 2 * Math.PI);
     ctx.closePath();
     ctx.fill();
     ctx.globalAlpha = 1;
-    y -= 5;
+    y -= speed();
     radius += 1;
-    opacity -= 0.02;
-    if (y < 0) {
+    opacity -= 0.015;
+    if (y <= -50) {
         y = 160;
         radius = 5;
         opacity = 0.7;
-    }
-    
+    }  
+}
 
+function animateSmoke2() {
+    var canvas = document.getElementById("myHouse3");
+    var ctx = canvas.getContext("2d");
     
+    ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+    ctx.fillStyle = "#888888";
+    ctx.globalAlpha = opacity2;
+    ctx.beginPath();
+    ctx.arc(x2, y2, radius2, 0, 2 * Math.PI);
+    ctx.closePath();
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    y2 -= speed();
+    radius2 += 1;
+    opacity2 -= 0.015;
+    if (y2 <= -50) {
+        y2 = 160;
+        radius2 = 5;
+        opacity2 = 0.7;
+    }  
 }
